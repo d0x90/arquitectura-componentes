@@ -1,0 +1,65 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
+    defaultConfig {
+        applicationId "com.pucp.diegocampos.firebasepruebas"
+        minSdkVersion 21
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:' + rootProject.supportLibVersion
+    compile 'com.android.support:cardview-v7:' + rootProject.supportLibVersion
+    compile 'com.android.support:recyclerview-v7:' + rootProject.supportLibVersion
+    compile 'com.android.support:design:' + rootProject.supportLibVersion
+
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.android.volley:volley:1.0.0'
+
+
+    testCompile 'junit:junit:4.12'
+
+    // Testing-only dependencies
+    androidTestCompile 'com.android.support.test:runner:' + rootProject.runnerVersion;
+    androidTestCompile 'com.android.support.test:rules:' + rootProject.rulesVersion;
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:' + rootProject.espressoVersion
+
+    androidTestCompile ('com.android.support.test.espresso:espresso-contrib:2.2'){
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude module: 'recyclerview-v7'
+    }
+
+    // Force usage of dependencies in the test app, since it is internally used by the runner module.
+    androidTestCompile 'com.android.support:support-annotations:' + rootProject.supportLibVersion
+    androidTestCompile 'com.android.support:support-v4:' + rootProject.supportLibVersion
+    androidTestCompile 'com.android.support:recyclerview-v7:' + rootProject.supportLibVersion
+
+    //Architecture components
+    //TODO Step 2: Add architecture libraries
+    compile 'android.arch.lifecycle:extensions:1.0.0-alpha1';
+    compile 'android.arch.persistence.room:runtime:1.0.0-alpha1';
+    annotationProcessor "android.arch.lifecycle:compiler:1.0.0-alpha1";
+    annotationProcessor "android.arch.persistence.room:compiler:1.0.0-alpha1"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version";
+}
+repositories {
+    mavenCentral()
+}
