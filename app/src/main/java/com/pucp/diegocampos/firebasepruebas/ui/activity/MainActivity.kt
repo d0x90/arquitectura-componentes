@@ -3,7 +3,6 @@ package com.pucp.diegocampos.firebasepruebas.ui.activity
 import android.arch.lifecycle.LifecycleRegistry
 import android.arch.lifecycle.LifecycleRegistryOwner
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -45,10 +44,11 @@ class MainActivity : AppCompatActivity(), LifecycleRegistryOwner, UsuarioClickCa
         setupList()
         initViewModel()
         suscribeUI()
+        obtenerServicio()
 
 
     }
-    fun obtenerServicio()
+    private fun obtenerServicio()
     {
         var service = ServiceVolley()
         var api = ApiController(service)
@@ -69,10 +69,12 @@ class MainActivity : AppCompatActivity(), LifecycleRegistryOwner, UsuarioClickCa
                     usuario.image = obj.getString("image")
                     usuarios.add(usuario)
                 }
+                mUsuarioAdapter.swap(usuarios)
             }
         })
     }
-    fun setupList()
+
+    private fun setupList()
     {
         mUsuarioAdapter = UsuarioAdapter(this,this)
         mRecyclerView = recyclerView
@@ -82,12 +84,12 @@ class MainActivity : AppCompatActivity(), LifecycleRegistryOwner, UsuarioClickCa
 
     }
 
-    fun initViewModel()
+    private fun initViewModel()
     {
         usuarioViewModel = ViewModelProviders.of(this).get(UsuarioViewModel::class.java)
     }
 
-    fun suscribeUI()
+    private fun suscribeUI()
     {
         usuarioViewModel.getUsuarios().observe(this, Observer<List<UsuarioEntity>>{
             usuarioEntities ->
