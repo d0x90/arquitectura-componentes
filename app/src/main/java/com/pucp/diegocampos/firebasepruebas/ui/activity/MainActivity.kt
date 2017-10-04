@@ -46,8 +46,8 @@ class MainActivity : AppCompatActivity(), LifecycleRegistryOwner, UsuarioClickCa
         setContentView(R.layout.activity_main)
 
         setupList()
-        initViewModel()
-        suscribeUI()
+        //initViewModel()
+        //suscribeUI()
         obtenerData()
 
     }
@@ -95,12 +95,16 @@ class MainActivity : AppCompatActivity(), LifecycleRegistryOwner, UsuarioClickCa
                         usuario.image = obj.getString("website") // TODO: REEMPLAZAR POR URL IMAGEN
                         usuarios.add(usuario)
                     }
+                    initViewModel()
+                    suscribeUI()
                     mUsuarioAdapter.swap(usuarios)
                 }
             })
         }else
         {
             /// YA SE TIENE LA DATA DE LA BD ??
+            initViewModel()
+            suscribeUI()
         }
     }
 
@@ -116,31 +120,6 @@ class MainActivity : AppCompatActivity(), LifecycleRegistryOwner, UsuarioClickCa
         return System.currentTimeMillis() - ultima_sincronizacion >= TimeUnit.MINUTES.toMillis(tiempo)
     }
 
-    private fun obtenerServicio()
-    {
-        var service = ServiceVolley()
-        var api = ApiController(service)
-        //Obtener data del servicio
-        api.getJSONArray("users",{ response ->
-            if (response != null)
-            {
-                Log.d(TAG,"Usuarios obtenidos del servicio...")
-                for ( item in 0 until response.length())
-                {
-                    var obj = response.get(item) as JSONObject
-                    var usuario = UsuarioEntity()
-                    usuario.user_id = obj.getInt("user_id")
-                    usuario.name = obj.getString("name")
-                    usuario.username = obj.getString("username")
-                    usuario.email = obj.getString("email")
-                    usuario.phone = obj.getString("phone")
-                    usuario.image = obj.getString("website") // TODO: REEMPLAZAR POR URL IMAGEN
-                    usuarios.add(usuario)
-                }
-                mUsuarioAdapter.swap(usuarios)
-            }
-        })
-    }
 
     private fun setupList()
     {
