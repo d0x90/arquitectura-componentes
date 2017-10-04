@@ -27,7 +27,7 @@ class UsuarioViewModel(application: Application) : AndroidViewModel(application)
 
     fun getUsuarios() : LiveData<List<UsuarioEntity>>
     {
-        return mUsuarioList;
+        return mUsuarioList
     }
 
     fun getUsuario(user_id : Int ) : LiveData<UsuarioEntity>

@@ -14,8 +14,6 @@ open class VolleyApplication : Application(){
     override fun onCreate() {
         super.onCreate()
         instance = this
-        //MultiDex.install(this)
-
     }
 
     val requestQueue: RequestQueue? = null
